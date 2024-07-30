@@ -8,83 +8,110 @@ import ButtonBoard from './Components/ButtonBoard';
 function App() {
 
   const [themeNumber, setThemeNumber] = useState(0);
-  const[screenValue, setScreenValue] = useState("0");
-  const[opDone,setOpDone] = useState(false);
-
+  const [firstNumber,setFirstNumber] = useState("0");
+  const [secondNumber,setSecondNumber] = useState(null);
+  const [operation,setOperation] = useState(null);
+  const [screenValue, setScreenValue] = useState(firstNumber);
   function handleClickTheme(){
     setThemeNumber((themeNumber + 1) % 3);
     changeBgBoddy((themeNumber + 1) % 3)
   }
-
+  
   function handleClickValue(value){
-    let nextScreenValue;
-    let fnumber, snumber, operator;
-    if(String(screenValue).match(/.\.$/g) && value.match(/\+|-|x|\//g)){
-      return
+    if(value === "0" && firstNumber === "0"){
+      return ;
     }
-    if(value === "." && String(screenValue).match(/^[0-9.]+(\+|-|x|\/)$/g)){
-      nextScreenValue = String(screenValue).concat("0",value);
-      setScreenValue(nextScreenValue);
-      setOpDone(false)
-      return
-    }
-    if(value === "." && String(screenValue).match(/\./g)){
-      return;
-    }
-    if((screenValue === "0" || screenValue ==="No division by zero" )&& (value.match(/0|=/g))){/*|\+|-|x|\/*/ 
-      return;
-    }
-    if(value === "DEL"){
-      if(String(screenValue).length === 1 || screenValue === "No division by zero"){
-        setScreenValue("0")
-        setOpDone(false);
-        return
-      }
-      nextScreenValue = String(screenValue).slice(0,String(screenValue).length-1);
-      setScreenValue(nextScreenValue)
-      return
-    }
-    if(value === "RESET"){
-      nextScreenValue = "0";
-      setScreenValue(nextScreenValue);
-      setOpDone(false);
-      return
-    }
-    if(value.match(/\+|-|x|\//g) && String(screenValue).match(/(\+|-|x|\/)$/g)){
-      return
-    }
-    if(value === "=" && !String(screenValue).match(/[0-9]+(\+|-|x|\/)[0-9]+/g)){
+
+    if(String(screenValue).length >= 19 && value!== "DEL" && value!== "RESET"){
       return
     }
 
-    if(screenValue === "0" && (value !== "." || screenValue ==="No division by zero") && !value.match(/\+|-|x|\//g)){
-      nextScreenValue = value;
-      setScreenValue(nextScreenValue);
+    if(value === "RESET"){
+      setFirstNumber("0");
+      setScreenValue("0");
+      setSecondNumber(null);
+      setOperation(null);
       return;
     }
-    if(!opDone || (opDone && value.match(/\+|-|x|\//g))){
-      nextScreenValue = String(screenValue).concat("",value);
-      setScreenValue(nextScreenValue);
-      setOpDone(false)
-    }else if(opDone){
-      nextScreenValue = value;
-      setScreenValue(nextScreenValue);
-      setOpDone(false)
+
+    if(/[0-9]/.test(value) && firstNumber === "0" && !operation){//handle the first number
+      console.log("first number 1");
+      setFirstNumber(value);
+      setScreenValue(value);
+      // return;
+    }else if(/[0-9]/.test(value) && firstNumber !== "0" && !operation){
+      console.log("first number 2");
+      setFirstNumber(firstNumber + value);
+      setScreenValue(screenValue + value);
+      // return;
     }
-    if(value.match(/\+|-|x|\/|=/g) && String(screenValue).match(/[0-9.]+(\+|-|x|\/)[0-9.]+/g)){
-      operator = nextScreenValue.match(/\+|-|x|\//g) ? nextScreenValue.match(/\+|-|x|\//g)[0] : null;
-      fnumber = nextScreenValue.match(/(-?[0-9]+\.)?[0-9]+(?=\+|-|x|\/)/g) ? nextScreenValue.match(/-?([0-9]+\.)?[0-9]+(?=\+|-|x|\/)/g)[0] : null;
-      snumber = nextScreenValue.match(/(?<=\+|-|x|\/)[0-9.]+(\.[0-9]+)?/g) ? nextScreenValue.match(/(?<=\+|-|x|\/)[0-9]+(\.[0-9]+)?/g)[0] : null;
-      if(operate && fnumber && snumber){
-        nextScreenValue = operate(fnumber,snumber,operator);
-        if(value.match(/\+|-|x|\//g)){
-          setScreenValue(nextScreenValue + value)
-        }else{
-          setScreenValue(nextScreenValue);
-          setOpDone(true);
-        }
+
+    if(/[\+\/\-x]/.test(value) && !secondNumber){//handle the first operation 
+      console.log("operation");
+      setOperation(value);
+      setScreenValue(firstNumber + value);
+      // return;
+    }
+
+    if(/[0-9]/.test(value) && operation){//handle second number 
+      console.log("second number");
+      if(value === "0" && secondNumber === "0"){
+        return;
+      }
+      setSecondNumber(secondNumber ? secondNumber + value : value);
+      setScreenValue(screenValue + value)
+    }
+
+    if(value === "=" && (firstNumber || firstNumber===0) && operation && secondNumber){//handle equal sign 
+      console.log("eqial sign")
+      let result = operate(String(firstNumber), String(secondNumber) ,String(operation));
+      setFirstNumber(result);
+      setSecondNumber(null);
+      setOperation(null)
+      setScreenValue(result);
+    }
+
+    if(/[\+\/\-x]/.test(value) && (firstNumber || firstNumber===0) && operation && secondNumber){//handle second operation 
+      console.log("operation2")
+      let result = operate(String(firstNumber), String(secondNumber) ,String(operation));
+      setFirstNumber(result);
+      setOperation(value)
+      setSecondNumber(null);
+      setScreenValue(result + value);
+    }
+
+    if(value === "DEL" && screenValue!=="No division by zero"){//handle the DEL 
+      if(!secondNumber && !operation && String(firstNumber).length === 1){
+        setFirstNumber("0");
+        setScreenValue("0")
+      }else if(!secondNumber && !operation && firstNumber){
+        setFirstNumber((String(firstNumber).slice(0,String(firstNumber).length - 1)))
+        setScreenValue((String(screenValue).slice(0,String(screenValue).length - 1)))
+      }else if(!secondNumber && operation && firstNumber){
+        setOperation(null);
+        setScreenValue(String(screenValue).slice(0,String(screenValue).length - 1))
+      }else if(String(secondNumber).length === 1 && operation && firstNumber){
+        setSecondNumber(null);
+        setScreenValue(String(screenValue).slice(0,String(screenValue).length-1));
+      }else if(secondNumber && operation && firstNumber){
+        setSecondNumber((String(secondNumber).slice(0,String(secondNumber).length - 1)))
+        setScreenValue((String(screenValue).slice(0,String(screenValue).length - 1)))
       }
     }
+    
+    if(value === "."){//handle the .
+      if(!secondNumber && !operation && freq(String(firstNumber),".") === 0){
+        setFirstNumber(firstNumber + ".");
+        setScreenValue(screenValue + ".")
+      }else if(!secondNumber && operation && firstNumber){
+        setSecondNumber("0" + value);
+        setScreenValue(screenValue + "0" + value);
+      }else if(freq(String(secondNumber),".") === 0 && operation && firstNumber){
+        setSecondNumber(secondNumber + value);
+        setScreenValue(screenValue + value)
+      }
+    }
+    console.log(firstNumber,secondNumber,operation)
   }
 
   return (
@@ -108,29 +135,37 @@ function operate(fnumber, snumber, operator){
 }
 
 function add(op1, op2){
-  console.log(op1)
-  return isFloating(String(Number(op1) + Number(op2))) ? String((Number(op1) + Number(op2)).toFixed(2)) : String(Number(op1) + Number(op2));
+  return isFloating(String(Number(op1) + Number(op2))) ? String(strip((Number(op1) + Number(op2)))) : String(Number(op1) + Number(op2));
 }
 function subtract(op1, op2){
-  console.log(op1,op2,"he")
-  return isFloating(op1 - op2) ? (op1 - op2).toFixed(2) : (op1 - op2);
+  return isFloating(op1 - op2) ?  strip((op1 - op2)) : (op1 - op2);
 }
 function multiply(op1, op2){
-  return isFloating(op1 * op2) ? (op1 * op2).toFixed(2) : (op1 * op2);
+  return isFloating(op1 * op2) ? strip((op1 * op2)): (op1 * op2);
 }
 function divide(op1, op2){
   if(op2 === "0"){
     return "No division by zero"
   }
-  return isFloating(op1 / op2) ? (op1 / op2).toFixed(2) : (op1 / op2);
+  return isFloating(op1 / op2) ? strip((op1 / op2)) : (op1 / op2);
 }
 
 function isFloating(x){
-  let mod = Math.abs(x % 1);
-  if(mod < 1 && mod > 0){
-    return true;
+  return String(x).length > 10;
+}
+
+function freq(string,c){
+  let freq = 0;
+  for(let i = 0 ; i < string.length ; i++){
+    if(string[i] === c){
+      freq++
+    }
   }
-  return false;
+  return freq;
+}
+
+function strip(number) {
+  return (parseFloat(number.toPrecision(12)));
 }
 
 export default App;
