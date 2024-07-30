@@ -1,38 +1,331 @@
-.App {
-  text-align: center;
+:root{
+  --bg-main-theme-1:hsl(222, 26%, 31%);
+  --bg-main-theme-2:hsl(0, 0%, 90%);
+  --bg-main-theme-3:hsl(268, 75%, 9%);
+  /**************************************/
+  --bg-toogle-theme-1:hsl(223, 31%, 20%);
+  --bg-toogle-theme-2:hsl(0, 5%, 81%);
+  --bg-toogle-theme-3:hsl(268, 71%, 12%);
+  /**************************************/
+  --bg-red-theme-1:hsl(6, 63%, 50%);
+  --bg-orange-theme-2:hsl(25, 77%, 54%);
+  --bg-pure-cyan-theme-3:hsl(176, 100%, 44%);
+  /**************************************/
+  --bg-hover-1-theme-1:hsl(6, 63%, 60%);
+  --bg-hover-1-theme-2:hsl(25, 99%, 27%)  ;
+  --bg-hover-1-theme-3:hsl(177, 92%, 70%);
+  /**************************************/
+  --bg-screen-theme-1:hsl(224, 36%, 15%);
+  --bg-screen-theme-2:hsl(0, 0%, 93%);
+  --bg-screen-theme-3:hsl(268, 71%, 12%);
+  /**************************************/
+  --bg-keypad-theme-1:hsl(30, 25%, 89%);
+  --bg-keypad-theme-2:hsl(45, 7%, 89%);
+  --bg-keypad-theme-3:hsl(268, 47%, 21%);
+  /**************************************/
+  --bg-keypad-2-theme-1:hsl(225, 21%, 49%);
+  --bg-keypad-2-theme-2:hsl(185, 42%, 37%);
+  --bg-keypad-2-theme-3:hsl(281, 89%, 26%);
+  /**************************************/
+  --color-keypad-theme-1:hsl(221, 14%, 31%);
+  --color-keypad-theme-2:hsl(60, 10%, 19%);
+  --color-keypad-theme-3:hsl(52, 100%, 62%);
+  /**************************************/
+  --box-shadow-keybad-theme-1:hsl(28, 16%, 65%);
+  --box-shadow-keybad-theme-2:hsl(35, 11%, 61%);
+  --box-shadow-keybad-theme-3:hsl(290, 70%, 36%);
+  /**************************************/
+  --box-shadow-keybad-2-theme-1: hsl(224, 28%, 35%);
+  --box-shadow-keybad-2-theme-2: hsl(185, 58%, 25%);
+  --box-shadow-keybad-2-theme-3: hsl(285, 91%, 52%);
+  /**************************************/
+  --box-shadow-keybad-3-theme-1:hsl(6, 70%, 34%);
+  --box-shadow-keybad-3-theme-2:hsl(25, 99%, 27%);
+  --box-shadow-keybad-3-theme-3:hsl(177, 92%, 70%);
+  /**************************************/
+  --bg-hover-key-theme-1:hsl(30, 25%, 99%);
+  --bg-hover-key-theme-2:hsl(45, 7%, 99%);;
+  --bg-hover-key-theme-3:hsl(268, 47%, 31%);
+  /**************************************/
+  --bg-hover-key2-theme-1:hsl(225, 21%, 59%);
+  --bg-hover-key2-theme-2:hsl(185, 42%, 47%);
+  --bg-hover-key2-theme-3:hsl(281, 89%, 36%);
+  /**************************************/
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: 'League Spartan'; 
+  src: url('fonts/LeagueSpartan-VariableFont_wght.ttf'); 
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+*{
+  font-family: "League Spartan",sans-serif;
+  transition: background-color 0.3s;
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.bg-main-theme-0{
+  background-color: var(--bg-main-theme-1);
+}
+.bg-main-theme-1{
+  background-color: var(--bg-main-theme-2);
+}
+.bg-main-theme-2{
+  background-color: var(--bg-main-theme-3);
+}
+.App{
+  padding: 5px 30px 0;
+  font-weight: 600;
+  font-size: 32px;
+}
+.main-color-0{
   color: white;
 }
+.main-color-1{
+  color: hsl(60, 10%, 19%);
+}
+.main-color-2{
+  color: hsl(52, 100%, 62%);
+}
+/*header section start*/
+.header h1{
+  font-weight: 700;
+  margin-bottom: 0;
+  font-size: 36px;
+}
+.header p,.header span{
+  font-size: 16px;
+  margin-right: 30px;
+}
+.header button{
+  all:unset;
+  width: 80px;
+  height: 30px;
 
-.App-link {
-  color: #61dafb;
+  border-radius: 30px;
+  position: relative;
+  cursor: pointer;
+}
+.App .bg-toogle-0{
+  background-color: var(--bg-toogle-theme-1);
+}
+.App .bg-toogle-1{
+  background-color: var(--bg-toogle-theme-2);
+}
+.App .bg-toogle-2{
+  background-color: var(--bg-toogle-theme-3);
+}
+.header button div{
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  transition: background-color 0.3s;
+  top: 50%;
+  transform: translate(7px,-50%);
+  transition:left 0.3s, transform 0.3s ;
+}
+.App .red-0{
+  background: var(--bg-red-theme-1);
+}
+.App .red-1{
+  background: var(--bg-orange-theme-2);
+}
+.App .red-2{
+  background: var(--bg-pure-cyan-theme-3);
+}
+.App .header button:hover .hover-1-theme-0,
+.button-board .hover-1-theme-0:hover{
+  background: var(--bg-hover-1-theme-1);
+}
+.App .header button:hover .hover-1-theme-1,
+.button-board .hover-1-theme-1:hover{
+  background: var(--bg-hover-1-theme-2);
+}
+.App .header button:hover .hover-1-theme-2,
+.button-board .hover-1-theme-2:hover{
+  background: var(--bg-hover-1-theme-3);
+}
+.header button .red-ball-pos-0{
+  left: 0;
+  transform: translate(7px,-50%);
+}
+.header button .red-ball-pos-1{
+  left: 50%;
+  transform: translate(-50%,-50%);
+}
+.header button .red-ball-pos-2{
+  left: 100%;
+  transform: translate(calc(-50% - 14px),-50%);
+}
+.header button span{
+  position: absolute;
+  top: -25px;
+  left: 10px;
+  cursor: auto;
+}
+.header button span:nth-of-type(2){
+  left: 50%;
+  transform: translate(-50%);
+}
+.header button span:nth-of-type(3){
+  left: 100%;
+  transform: translate(calc(-50% - 12px));
+}
+/*header section end*/
+/*screen section start*/
+.screen{
+  height: 100px;
+  border-radius: 12px;
+  margin-top: 25px;
+  padding: 0 25px;
+  font-size: 36px;
+}
+.bg-screen-0{
+  background-color: var(--bg-screen-theme-1);
+}
+.bg-screen-1{
+  background-color: var(--bg-screen-theme-2);
+}
+.bg-screen-2{
+  background-color: var(--bg-screen-theme-3);
+}
+.button-board{
+  padding :25px;
+  margin-top: 30px;
+  border-radius: 12px;
+}
+.board-row{
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+.board-row:last-of-type{
+  margin-bottom: 0;
+}
+.button-board button{
+  all: unset;
+  height: 70px;
+  border-radius: 7px;
+  flex:1 1 50px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size:38px;
+  transition: background-color 0.3s;
+}
+.board-row .btn-text-color-theme-0{
+  color: var(--color-keypad-theme-1);
+}
+.board-row .btn-text-color-theme-1{
+  color: var(--color-keypad-theme-2);
+}
+.board-row .btn-text-color-theme-2{
+  color: var(--color-keypad-theme-3);
+}
+.button-board .key-bg-0{
+  background-color: var(--bg-keypad-theme-1);
+  box-shadow: 0 5px 0 0 var(--box-shadow-keybad-theme-1);
+}
+.button-board .key-bg-1{
+  background-color: var(--bg-keypad-theme-2);
+  box-shadow: 0 5px 0 0 var(--box-shadow-keybad-theme-2);
+}
+.button-board .key-bg-2{
+  background-color: var(--bg-keypad-theme-3);
+  box-shadow: 0 5px 0 0 var(--box-shadow-keybad-theme-3);
+}
+.button-board .key-bg-hover-0:hover{
+  background-color: var(--bg-hover-key-theme-1);
+}
+.button-board .key-bg-hover-1:hover{
+  background-color: var(--bg-hover-key-theme-2);
+}
+.button-board .key-bg-hover-2:hover{
+  background-color: var(--bg-hover-key-theme-3);
+}
+.button-board .board-row:first-child button:last-child,
+.button-board .board-row:last-child button:first-child{
+  color: white;
+  font-size: 28px;
+  font-weight: 600;
+}
+.button-board .board-row:first-child .key-bg-2-theme-0:last-child,
+.button-board .board-row:last-child .key-bg-2-theme-0:first-child{
+  background-color: var(--bg-keypad-2-theme-1);
+  box-shadow:0 5px 0 0 var(--box-shadow-keybad-2-theme-1);
+}
+.button-board .board-row:first-child .key-bg-2-theme-1:last-child,
+.button-board .board-row:last-child .key-bg-2-theme-1:first-child{
+  background-color: var(--bg-keypad-2-theme-2);
+  box-shadow:0 5px 0 0 var(--box-shadow-keybad-2-theme-2);
+}
+.button-board .board-row:first-child .key-bg-2-theme-2:last-child,
+.button-board .board-row:last-child .key-bg-2-theme-2:first-child{
+  background-color: var(--bg-keypad-2-theme-3);
+  box-shadow:0 5px 0 0 var(--box-shadow-keybad-2-theme-3);
+}
+/***/
+.button-board .board-row:first-child .key-bg-2-hover-theme-0:last-child:hover,
+.button-board .board-row:last-child .key-bg-2-hover-theme-0:first-child:hover{
+  background-color: var(--bg-hover-key2-theme-1);
+}
+.button-board .board-row:first-child .key-bg-2-hover-theme-1:last-child:hover,
+.button-board .board-row:last-child .key-bg-2-hover-theme-1:first-child:hover{
+  background-color: var(--bg-hover-key2-theme-2);
+}
+.button-board .board-row:first-child .key-bg-2-hover-theme-2:last-child:hover,
+.button-board .board-row:last-child .key-bg-2-hover-theme-2:first-child:hover{
+  background-color: var(--bg-hover-key2-theme-3);
+}
+/**/
+.button-board .board-row:last-child button:last-child{
+  color: white;
+
+  font-size: 28px;
+  font-weight: 600;
+}
+.button-board .board-row:last-child .red-0:last-child{
+  background: var(--bg-red-theme-1);
+  box-shadow: 0 5px 0 0 var(--box-shadow-keybad-3-theme-1);
+}
+.button-board .board-row:last-child .red-1:last-child{
+  background: var(--bg-orange-theme-2);
+  box-shadow: 0 5px 0 0 var(--box-shadow-keybad-3-theme-2);
+}
+.button-board .board-row:last-child .red-2:last-child{
+  background: var(--bg-pure-cyan-theme-3);
+  box-shadow: 0 5px 0 0 var(--box-shadow-keybad-3-theme-3);
+  color: black;
+}
+.button-board .board-row:last-child .red-0:last-child:hover{
+  background: var(--bg-hover-1-theme-1);
+}
+.button-board .board-row:last-child .red-1:last-child:hover{
+  background: var(--bg-hover-1-theme-2);
+}
+.button-board .board-row:last-child .red-2:last-child:hover{
+  background: var(--bg-hover-1-theme-3);
+}
+@media (max-width:360px) {
+  .App{
+    padding: 0;
+  }
+  .screen, .button-board{
+    padding: 25px 15px;
+  }
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+@media (min-width: 576px) {
+  .container, .container-sm {
+    max-width: 540px;
   }
 }
+@media (max-height:700px) {
+  .button-board button{
+    max-height: 70px;
+    height: unset;
+  }
+  .screen{
+    max-height: 100px;
+    height: unset;
+  }
+}
+
+/*screen section end*/
