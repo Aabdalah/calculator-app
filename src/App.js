@@ -6,7 +6,7 @@ import Screen from './Components/Screen';
 import ButtonBoard from './Components/ButtonBoard';
 
 function App() {
-  changeBgBoddy(localStorage.getItem("themeNumber"))
+  changeBgBoddy(localStorage.getItem("themeNumber")|| 0)
   const [themeNumber, setThemeNumber] = useState(localStorage.getItem("themeNumber") || 0);
   const [firstNumber,setFirstNumber] = useState("0");
   const [secondNumber,setSecondNumber] = useState(null);
