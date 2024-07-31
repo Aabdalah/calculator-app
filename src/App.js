@@ -35,26 +35,22 @@ function App() {
     }
 
     if(/[0-9]/.test(value) && firstNumber === "0" && !operation){//handle the first number
-      console.log("first number 1");
       setFirstNumber(value);
       setScreenValue(value);
       // return;
     }else if(/[0-9]/.test(value) && firstNumber !== "0" && !operation){
-      console.log("first number 2");
       setFirstNumber(firstNumber + value);
       setScreenValue(screenValue + value);
       // return;
     }
 
     if(/[\+\/\-x]/.test(value) && !secondNumber){//handle the first operation 
-      console.log("operation");
       setOperation(value);
       setScreenValue(firstNumber + value);
       // return;
     }
 
     if(/[0-9]/.test(value) && operation){//handle second number 
-      console.log("second number");
       if(value === "0" && secondNumber === "0"){
         return;
       }
@@ -63,7 +59,6 @@ function App() {
     }
 
     if(value === "=" && (firstNumber || firstNumber===0) && operation && secondNumber){//handle equal sign 
-      console.log("eqial sign")
       let result = operate(String(firstNumber), String(secondNumber) ,String(operation));
       setFirstNumber(result);
       setSecondNumber(null);
@@ -72,7 +67,6 @@ function App() {
     }
 
     if(/[\+\/\-x]/.test(value) && (firstNumber || firstNumber===0) && operation && secondNumber){//handle second operation 
-      console.log("operation2")
       let result = operate(String(firstNumber), String(secondNumber) ,String(operation));
       setFirstNumber(result);
       setOperation(value)
@@ -111,11 +105,24 @@ function App() {
         setScreenValue(screenValue + value)
       }
     }
-    console.log(firstNumber,secondNumber,operation)
+  }
+
+  function handleKeyDown(event){
+    if(event.key === "*"){
+      handleClickValue("x");
+    }else if(event.key === "Enter"){
+      handleClickValue("=")
+    }else if(event.key === "Backspace" || event.key ==="Delete"){
+      handleClickValue("DEL")
+    }else if(event.key === "Escape"){
+      handleClickValue("RESET")
+    }else{
+      handleClickValue(event.key)
+    }
   }
 
   return (
-    <div className={"App vh-100 d-flex flex-column align-items-center justify-content-center main-color-"+ themeNumber}>
+    <div className={"App vh-100 d-flex flex-column align-items-center justify-content-center main-color-"+ themeNumber} tabIndex={0} onKeyDown={handleKeyDown}>
       <Header themenumber={themeNumber} handleClickTheme={handleClickTheme}/>
       <Screen themenumber={themeNumber} screenvalue={screenValue}/>
       <ButtonBoard themenumber={themeNumber} handleclickvalue={handleClickValue}/>
