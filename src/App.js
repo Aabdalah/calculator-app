@@ -6,15 +6,16 @@ import Screen from './Components/Screen';
 import ButtonBoard from './Components/ButtonBoard';
 
 function App() {
-
-  const [themeNumber, setThemeNumber] = useState(0);
+  changeBgBoddy(localStorage.getItem("themeNumber"))
+  const [themeNumber, setThemeNumber] = useState(localStorage.getItem("themeNumber") || 0);
   const [firstNumber,setFirstNumber] = useState("0");
   const [secondNumber,setSecondNumber] = useState(null);
   const [operation,setOperation] = useState(null);
   const [screenValue, setScreenValue] = useState(firstNumber);
   function handleClickTheme(){
     setThemeNumber((themeNumber + 1) % 3);
-    changeBgBoddy((themeNumber + 1) % 3)
+    changeBgBoddy((themeNumber + 1) % 3);
+    localStorage.setItem("themeNumber",(themeNumber + 1) % 3)
   }
   
   function handleClickValue(value){
@@ -174,6 +175,5 @@ function freq(string,c){
 function strip(number) {
   return (parseFloat(number.toPrecision(12)));
 }
-
 export default App;
 
